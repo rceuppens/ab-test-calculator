@@ -6,14 +6,13 @@
 <title>A/B Test — Minimum Detectable Effect</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     background: #f3f6f8;
     color: #1a1a1a;
     font-family: 'DM Sans', sans-serif;
-    --mono: 'DM Sans', sans-serif;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -49,13 +48,11 @@
     text-transform: uppercase;
     color: #0a66c2;
     margin-bottom: 0.4rem;
-    font-family: 'DM Sans', sans-serif;
   }
 
   h1 { font-size: 1.6rem; font-weight: 700; color: #1a1a1a; line-height: 1.2; margin-bottom: 0.4rem; }
   .subtitle { font-size: 0.8rem; color: #666; }
 
-  /* ── Input panels ── */
   .inputs-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -77,39 +74,23 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #0a66c2;
-    font-family: 'DM Sans', sans-serif;
     margin-bottom: 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
   }
 
-  .pip {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-  }
+  .pip { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 
-  .input-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
+  .input-row { display: flex; align-items: flex-start; gap: 0.75rem; }
 
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    flex: 1;
-  }
+  .input-group { display: flex; flex-direction: column; gap: 0.3rem; flex: 1; }
 
   .input-group label {
     font-size: 0.62rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #888;
-    font-family: 'DM Sans', sans-serif;
   }
 
   .input-group input {
@@ -128,14 +109,8 @@
   .input-group input:focus { border-color: #0a66c2; }
   .input-group input.error { border-color: #e05252; }
 
-  .error-msg {
-    font-size: 0.65rem;
-    color: #e05252;
-    font-family: 'DM Sans', sans-serif;
-    min-height: 0.9rem;
-  }
+  .error-msg { font-size: 0.65rem; color: #e05252; min-height: 0.9rem; }
 
-  /* Result badge */
   .result-badge {
     display: flex;
     flex-direction: column;
@@ -145,75 +120,33 @@
     padding-top: 1.4rem;
   }
 
-  .badge-val {
-    font-size: 1.3rem;
-    font-weight: 700;
-    font-family: 'DM Sans', sans-serif;
-    line-height: 1;
-  }
+  .badge-val { font-size: 1.3rem; font-weight: 700; line-height: 1; }
+  .badge-detail { font-size: 0.62rem; color: #888; text-align: right; }
 
-  .badge-detail {
-    font-size: 0.62rem;
-    color: #888;
-    font-family: 'DM Sans', sans-serif;
-    text-align: right;
-  }
-
-  /* ── Verdict banner ── */
   .verdict {
     border-radius: 8px;
     padding: 0.85rem 1.25rem;
     margin-bottom: 1.5rem;
     font-size: 0.82rem;
-    font-family: 'DM Sans', sans-serif;
     display: none;
     align-items: center;
     gap: 0.75rem;
   }
 
   .verdict.show { display: flex; }
-
-  .verdict.detectable {
-    background: #eaf4ee;
-    border: 1px solid #7bc99a;
-    color: #2d7a4f;
-  }
-
-  .verdict.not-detectable {
-    background: #fdf0ee;
-    border: 1px solid #f0a090;
-    color: #b94040;
-  }
-
-  .verdict.partial {
-    background: #fdf8ee;
-    border: 1px solid #e8c96a;
-    color: #7a5c10;
-  }
+  .verdict.detectable { background: #eaf4ee; border: 1px solid #7bc99a; color: #2d7a4f; }
+  .verdict.not-detectable { background: #fdf0ee; border: 1px solid #f0a090; color: #b94040; }
+  .verdict.partial { background: #fdf8ee; border: 1px solid #e8c96a; color: #7a5c10; }
 
   .verdict-icon { font-size: 1.1rem; flex-shrink: 0; }
   .verdict-text { line-height: 1.4; }
   .verdict-text strong { font-weight: 700; }
 
-  /* ── Chart ── */
   .chart-wrap { position: relative; height: 360px; }
 
-  .legend {
-    display: flex;
-    gap: 1.25rem;
-    margin-top: 1rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+  .legend { display: flex; gap: 1.25rem; margin-top: 1rem; align-items: center; flex-wrap: wrap; }
 
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.7rem;
-    color: #666;
-    font-family: 'DM Sans', sans-serif;
-  }
+  .legend-item { display: flex; align-items: center; gap: 0.45rem; font-size: 0.7rem; color: #666; }
 
   .legend-line { width: 22px; height: 3px; border-radius: 2px; }
   .legend-line.dashed {
@@ -229,26 +162,10 @@
     height: 2px;
   }
 
-  .params {
-    display: flex;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid #dce6f0;
-    flex-wrap: wrap;
-  }
-
+  .params { display: flex; gap: 2rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #dce6f0; flex-wrap: wrap; }
   .param { display: flex; flex-direction: column; gap: 0.2rem; }
-
-  .param-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #aaa;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .param-value { font-size: 0.82rem; color: #0a66c2; font-family: 'DM Sans', sans-serif; }
+  .param-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: #aaa; }
+  .param-value { font-size: 0.82rem; color: #0a66c2; }
 </style>
 </head>
 <body>
@@ -259,10 +176,7 @@
     <div class="subtitle">Enter your impressions and/or observed CTR difference to visualise test sensitivity.</div>
   </div>
 
-  <!-- Two input panels -->
   <div class="inputs-row">
-
-    <!-- Panel 1: Impressions -->
     <div class="input-panel">
       <div class="input-panel-title">
         <span class="pip" style="background:#ff6b35;"></span>
@@ -281,7 +195,6 @@
       </div>
     </div>
 
-    <!-- Panel 2: CTR difference -->
     <div class="input-panel">
       <div class="input-panel-title">
         <span class="pip" style="background:#9b59b6;"></span>
@@ -301,7 +214,6 @@
     </div>
   </div>
 
-  <!-- Verdict banner (shown when both inputs are filled) -->
   <div class="verdict" id="verdict">
     <span class="verdict-icon" id="verdict-icon"></span>
     <span class="verdict-text" id="verdict-text"></span>
@@ -353,70 +265,41 @@
 <script>
 const P0 = 0.01; // baseline CTR
 
-// ── Core formulas (numerically correct two-proportion z-test) ─────────────────
-// Uses pooled SE under H0, binary search for the MDE that achieves exactly 80% power.
-
-function normCDF(z) {
-  // Abramowitz & Stegun approximation, accurate to ~7 decimal places
-  const t = 1 / (1 + 0.2316419 * Math.abs(z));
-  const d = 0.3989423 * Math.exp(-z * z / 2);
-  const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.7814779 + t * (-1.8212560 + t * 1.3302744))));
-  return z >= 0 ? 1 - p : p;
-}
-
-function actualPower(n, dPct, z_a) {
-  const d = dPct / 100;
-  const p1 = P0 + d;
-  if (p1 >= 1 || p1 <= 0) return 0;
-  const pPool = (P0 + p1) / 2;
-  const se = Math.sqrt(pPool * (1 - pPool) * 2 / n);
-  const ncp = d / se;
-  return normCDF(ncp - z_a) + normCDF(-ncp - z_a);
-}
+// ── Core formulas ─────────────────────────────────────────────────────────────
+// Two-proportion z-test, baseline p0=1%, 80% power
+// z_alpha: 1.96 (α=0.05) or 1.645 (α=0.10)
+// z_beta:  0.842 (80% power)
+// MDE = (z_alpha + z_beta) * sqrt(2 * p0 * (1-p0) / n)
 
 function calcMDE(n, alpha) {
-  const z_a = alpha === 0.05 ? 1.96 : 1.6449;
-  // Binary search for MDE that yields exactly 80% power
-  let lo = 0.000001, hi = (1 - P0) * 0.99;
-  for (let i = 0; i < 80; i++) {
-    const mid = (lo + hi) / 2;
-    if (actualPower(n, mid * 100, z_a) < 0.80) lo = mid;
-    else hi = mid;
-  }
-  return (lo + hi) / 2 * 100;
+  var z_alpha = alpha === 0.05 ? 1.96 : 1.645;
+  var z_beta  = 0.842;
+  return ((z_alpha + z_beta) * Math.sqrt(2 * P0 * (1 - P0) / n)) * 100;
 }
 
-// Required n to detect a given absolute difference d (in % pts)
 function calcN(d, alpha) {
-  const z_a = alpha === 0.05 ? 1.96 : 1.6449;
-  // Binary search for smallest n that achieves 80% power
-  let lo = 10, hi = 5000000;
-  while (lo < hi) {
-    const mid = Math.floor((lo + hi) / 2);
-    if (actualPower(mid, d, z_a) >= 0.80) hi = mid;
-    else lo = mid + 1;
-  }
-  return hi;
+  var z_alpha = alpha === 0.05 ? 1.96 : 1.645;
+  var z_beta  = 0.842;
+  var dFrac = d / 100;
+  return Math.ceil(2 * P0 * (1 - P0) * Math.pow((z_alpha + z_beta) / dFrac, 2));
 }
 
-// Build smooth log-spaced curve
 function buildCurve(alpha) {
-  const pts = [];
-  for (let i = 0; i <= 150; i++) {
-    const n = Math.round(Math.pow(10, 2.7 + i * (6 - 2.7) / 150));
+  var pts = [];
+  for (var i = 0; i <= 150; i++) {
+    var n = Math.round(Math.pow(10, 2.7 + i * (6 - 2.7) / 150));
     pts.push({ x: n, y: parseFloat(calcMDE(n, alpha).toFixed(4)) });
   }
   return pts;
 }
 
-// ── Chart setup ───────────────────────────────────────────────────────────────
-const ctx = document.getElementById('chart').getContext('2d');
+// ── Chart ─────────────────────────────────────────────────────────────────────
+var ctx = document.getElementById('chart').getContext('2d');
 
-const chart = new Chart(ctx, {
+var chart = new Chart(ctx, {
   type: 'line',
   data: {
     datasets: [
-      // 0: α=0.05 curve
       {
         label: 'α = 0.05',
         data: buildCurve(0.05),
@@ -428,7 +311,6 @@ const chart = new Chart(ctx, {
         tension: 0.1,
         order: 4,
       },
-      // 1: α=0.10 curve
       {
         label: 'α = 0.10',
         data: buildCurve(0.10),
@@ -441,7 +323,6 @@ const chart = new Chart(ctx, {
         tension: 0.1,
         order: 3,
       },
-      // 2: Vertical impressions marker
       {
         label: 'Impressions marker',
         data: [],
@@ -456,7 +337,6 @@ const chart = new Chart(ctx, {
         tension: 0,
         order: 1,
       },
-      // 3: Horizontal CTR difference marker
       {
         label: 'CTR diff marker',
         data: [],
@@ -471,7 +351,6 @@ const chart = new Chart(ctx, {
         tension: 0,
         order: 2,
       },
-      // 4: Intersection dot
       {
         label: 'Intersection',
         data: [],
@@ -500,12 +379,12 @@ const chart = new Chart(ctx, {
         titleFont: { family: 'DM Sans', size: 11 },
         bodyFont: { family: 'DM Sans', size: 11 },
         padding: 12,
-        filter: (item) => item.datasetIndex < 2,
+        filter: function(item) { return item.datasetIndex < 2; },
         callbacks: {
-          title: (items) => `Impressions: ${fmtNum(Math.round(items[0].parsed.x))}`,
-          label: (item) => {
-            const mde = item.parsed.y.toFixed(2);
-            return ` ${item.dataset.label}  MDE: ${mde}%  (1.00% vs ${(1 + parseFloat(mde)).toFixed(2)}%)`;
+          title: function(items) { return 'Impressions: ' + fmtNum(Math.round(items[0].parsed.x)); },
+          label: function(item) {
+            var mde = item.parsed.y.toFixed(2);
+            return ' ' + item.dataset.label + '  MDE: ' + mde + '%  (1.00% vs ' + (1 + parseFloat(mde)).toFixed(2) + '%)';
           }
         }
       }
@@ -519,8 +398,8 @@ const chart = new Chart(ctx, {
         ticks: {
           color: '#999',
           font: { family: 'DM Sans', size: 11 },
-          callback: (val) => {
-            const map = { 1000:'1K', 5000:'5K', 10000:'10K', 50000:'50K', 100000:'100K', 500000:'500K', 1000000:'1M' };
+          callback: function(val) {
+            var map = { 1000:'1K', 5000:'5K', 10000:'10K', 50000:'50K', 100000:'100K', 500000:'500K', 1000000:'1M' };
             return map[val] !== undefined ? map[val] : '';
           }
         },
@@ -535,11 +414,12 @@ const chart = new Chart(ctx, {
       y: {
         min: 0,
         max: 2.0,
+        beginAtZero: true,
         grid: { color: '#eef2f7' },
         ticks: {
           color: '#999',
           font: { family: 'DM Sans', size: 11 },
-          callback: v => v.toFixed(2) + '%'
+          callback: function(v) { return v.toFixed(2) + '%'; }
         },
         title: {
           display: true,
@@ -554,8 +434,8 @@ const chart = new Chart(ctx, {
 });
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let currentN = null;
-let currentDiff = null;
+var currentN    = null;
+var currentDiff = null;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function fmtNum(n) {
@@ -566,35 +446,32 @@ function fmtNum(n) {
 
 // ── Chart updater ─────────────────────────────────────────────────────────────
 function updateChart() {
-  const n = currentN;
-  const diff = currentDiff;
+  var n    = currentN;
+  var diff = currentDiff;
 
-  // Dataset 2: vertical impressions line
   if (n !== null) {
-    const mde05 = calcMDE(n, 0.05);
-    const mde10 = calcMDE(n, 0.10);
+    var mde05 = calcMDE(n, 0.05);
+    var mde10 = calcMDE(n, 0.10);
     chart.data.datasets[2].data = [
       { x: n, y: 0 },
       { x: n, y: mde10 },
-      { x: n, y: mde05 },
+      { x: n, y: mde05 }
     ];
     chart.data.datasets[2].pointRadius = [0, 5, 5];
   } else {
     chart.data.datasets[2].data = [];
   }
 
-  // Dataset 3: horizontal CTR diff line
   if (diff !== null) {
     chart.data.datasets[3].data = [
       { x: 500,     y: diff },
-      { x: 1000000, y: diff },
+      { x: 1000000, y: diff }
     ];
     chart.data.datasets[3].pointRadius = [0, 0];
   } else {
     chart.data.datasets[3].data = [];
   }
 
-  // Dataset 4: intersection dot (both inputs present)
   if (n !== null && diff !== null) {
     chart.data.datasets[4].data = [{ x: n, y: diff }];
   } else {
@@ -602,52 +479,47 @@ function updateChart() {
   }
 
   chart.update('none');
-
-  // Verdict
   updateVerdict(n, diff);
 }
 
 function updateVerdict(n, diff) {
-  const el = document.getElementById('verdict');
-  const icon = document.getElementById('verdict-icon');
-  const text = document.getElementById('verdict-text');
+  var el   = document.getElementById('verdict');
+  var icon = document.getElementById('verdict-icon');
+  var text = document.getElementById('verdict-text');
 
   if (n === null || diff === null) {
     el.className = 'verdict';
     return;
   }
 
-  const mde05 = calcMDE(n, 0.05);
-  const mde10 = calcMDE(n, 0.10);
-  const nNeeded05 = calcN(diff, 0.05);
-  const nNeeded10 = calcN(diff, 0.10);
+  var mde05     = calcMDE(n, 0.05);
+  var mde10     = calcMDE(n, 0.10);
+  var nNeeded05 = calcN(diff, 0.05);
+  var nNeeded10 = calcN(diff, 0.10);
 
   if (diff >= mde05) {
-    // Detectable at both alphas
     el.className = 'verdict show detectable';
     icon.textContent = '✓';
-    text.innerHTML = `<strong>Detectable at both α = 0.05 and α = 0.10.</strong> Your observed difference of <strong>${diff.toFixed(2)}%</strong> exceeds the MDE of <strong>${mde05.toFixed(2)}%</strong> at ${fmtNum(n)} impressions. Your test has enough power to confirm this result with confidence.`;
+    text.innerHTML = '<strong>Detectable at both α = 0.05 and α = 0.10.</strong> Your observed difference of <strong>' + diff.toFixed(2) + '%</strong> exceeds the MDE of <strong>' + mde05.toFixed(2) + '%</strong> at ' + fmtNum(n) + ' impressions. Your test has enough power to confirm this result with confidence.';
   } else if (diff >= mde10) {
-    // Detectable only at lenient alpha
     el.className = 'verdict show partial';
     icon.textContent = '~';
-    text.innerHTML = `<strong>Detectable at α = 0.10 only.</strong> Your difference of <strong>${diff.toFixed(2)}%</strong> clears the lenient threshold (${mde10.toFixed(2)}%) but not the strict one (${mde05.toFixed(2)}%). Consider this a tentative signal — you'd need <strong>${fmtNum(nNeeded05)} impressions</strong> to confirm it at α = 0.05.`;
+    text.innerHTML = '<strong>Detectable at α = 0.10 only.</strong> Your difference of <strong>' + diff.toFixed(2) + '%</strong> clears the lenient threshold (' + mde10.toFixed(2) + '%) but not the strict one (' + mde05.toFixed(2) + '%). Consider this a tentative signal — you\'d need <strong>' + fmtNum(nNeeded05) + ' impressions</strong> to confirm it at α = 0.05.';
   } else {
-    // Not detectable at either
     el.className = 'verdict show not-detectable';
     icon.textContent = '✕';
-    text.innerHTML = `<strong>Not yet detectable.</strong> Your difference of <strong>${diff.toFixed(2)}%</strong> is below the MDE of <strong>${mde10.toFixed(2)}%</strong> at ${fmtNum(n)} impressions. You'd need at least <strong>${fmtNum(nNeeded10)} impressions</strong> (α = 0.10) or <strong>${fmtNum(nNeeded05)}</strong> (α = 0.05) to reliably detect this effect.`;
+    text.innerHTML = '<strong>Not yet detectable.</strong> Your difference of <strong>' + diff.toFixed(2) + '%</strong> is below the MDE of <strong>' + mde10.toFixed(2) + '%</strong> at ' + fmtNum(n) + ' impressions. You\'d need at least <strong>' + fmtNum(nNeeded10) + ' impressions</strong> (α = 0.10) or <strong>' + fmtNum(nNeeded05) + '</strong> (α = 0.05) to reliably detect this effect.';
   }
 }
 
 // ── Impressions input ─────────────────────────────────────────────────────────
-const impInput   = document.getElementById('imp-input');
-const impError   = document.getElementById('imp-error');
-const impMdeVal  = document.getElementById('imp-mde-val');
-const impMdeDet  = document.getElementById('imp-mde-detail');
+var impInput  = document.getElementById('imp-input');
+var impError  = document.getElementById('imp-error');
+var impMdeVal = document.getElementById('imp-mde-val');
+var impMdeDet = document.getElementById('imp-mde-detail');
 
-impInput.addEventListener('input', () => {
-  const val = parseInt(impInput.value, 10);
+impInput.addEventListener('input', function() {
+  var val = parseInt(impInput.value, 10);
   impError.textContent = '';
   impInput.classList.remove('error');
 
@@ -669,20 +541,20 @@ impInput.addEventListener('input', () => {
   }
 
   currentN = val;
-  const mde = calcMDE(val, 0.05);
+  var mde = calcMDE(val, 0.05);
   impMdeVal.textContent = mde.toFixed(2) + '%';
-  impMdeDet.textContent = `MDE at α 0.05`;
+  impMdeDet.textContent = 'MDE at α 0.05';
   updateChart();
 });
 
 // ── CTR diff input ────────────────────────────────────────────────────────────
-const ctrInput   = document.getElementById('ctr-input');
-const ctrError   = document.getElementById('ctr-error');
-const ctrImpVal  = document.getElementById('ctr-imp-val');
-const ctrImpDet  = document.getElementById('ctr-imp-detail');
+var ctrInput  = document.getElementById('ctr-input');
+var ctrError  = document.getElementById('ctr-error');
+var ctrImpVal = document.getElementById('ctr-imp-val');
+var ctrImpDet = document.getElementById('ctr-imp-detail');
 
-ctrInput.addEventListener('input', () => {
-  const val = parseFloat(ctrInput.value);
+ctrInput.addEventListener('input', function() {
+  var val = parseFloat(ctrInput.value);
   ctrError.textContent = '';
   ctrInput.classList.remove('error');
 
@@ -704,9 +576,9 @@ ctrInput.addEventListener('input', () => {
   }
 
   currentDiff = val;
-  const needed = calcN(val, 0.05);
+  var needed = calcN(val, 0.05);
   ctrImpVal.textContent = fmtNum(needed);
-  ctrImpDet.textContent = `needed (α 0.05)`;
+  ctrImpDet.textContent = 'needed (α 0.05)';
   updateChart();
 });
 </script>
