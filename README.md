@@ -66,12 +66,11 @@ n = 2 × p₀ × (1 − p₀) × ((z_α/2 + z_β) / d)²
 No installation required. Open `index.html` in any modern browser.
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/ab-test-calculator.git
+git clone https://github.com/rceuppens/ab-test-calculator.git
 cd ab-test-calculator
 open index.html
 ```
 
-Or visit the [live hosted version](https://YOUR-USERNAME.github.io/ab-test-calculator/).
 
 ---
 
