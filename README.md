@@ -1,4 +1,4 @@
-# A/B Test Sensitivity Calculator
+# A/B Test Sensitivity Calculator by Ruben Ceuppens
 
 An interactive, browser-based tool for planning and evaluating A/B tests on digital advertising campaigns. Enter your impression volumes and observed CTR/engagement rate differences to instantly visualise statistical power and minimum detectable effects.
 
